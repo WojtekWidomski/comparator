@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+
+  <menu id="infopage-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Edit</attribute>
+        <attribute name="action">win.edit_server</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Remove server</attribute>
+        <attribute name="action">win.remove_server</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <menu id="app-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Edit</attribute>
+        <attribute name="action">win.edit_list</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Settings</attribute>
+        <attribute name="action">win.settings</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">About</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+
+
+
+  <template class="ComparatorWindow" parent="AdwApplicationWindow">
+    <signal name="close-request" handler="window_closed" swapped="no"/>
+    <signal name="notify::default-width" handler="width_changed" swapped="no"/>
+    <property name="default-width">600</property>
+    <property name="default-height">600</property>
+    <property name="width-request">330</property>
+    <property name="title" translatable="yes">Comparator</property>
+
+
+    <child>
+      <object class="AdwLeaflet" id="servers_leaflet">
+        <property name="can-navigate-back">True</property>
+        <property name="can-unfold">False</property>
+
+        <child>
+          <object class="AdwLeafletPage">
+            <property name="name">servers_list</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="name">servers_list</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="AdwViewStack" id="header_bar_stack">
+
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="name">main_headerbar</property>
+                        <property name="child">
+                          <object class="AdwHeaderBar">
+                            <property name="show-end-title-buttons">True</property>
+                            <child type="title">
+                              <object class="AdwViewSwitcherTitle" id="viewswitcher_top">
+                                <property name="stack">main_stack</property>
+                                <property name="title">Comparator</property>
+                              </object>
+                            </child>
+                            <child type="end">
+                              <object class="GtkMenuButton">
+                                <property name="focusable">1</property>
+                                <property name="focus-on-click">0</property>
+                                <property name="receives-default">1</property>
+                                <property name="direction">none</property>
+                                <property name="menu-model">app-menu</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="focusable">1</property>
+                                <property name="receives-default">1</property>
+                                <property name="tooltip-text" translatable="yes">Add server</property>
+                                <property name="icon-name">list-add-symbolic</property>
+                                <signal name="clicked" handler="add_clicked" swapped="no"/>
+                              </object>
+                            </child>
+                            <child type="end">
+                              <object class="GtkButton" id="refresh_button">
+                                <property name="focusable">1</property>
+                                <property name="receives-default">1</property>
+                                <property name="tooltip-text" translatable="yes">Refresh</property>
+                                <property name="icon-name">view-refresh-symbolic</property>
+                                <signal name="clicked" handler="refresh_all" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="name">edit_headerbar</property>
+                        <property name="child">
+                          <object class="AdwHeaderBar">
+                            <property name="show-end-title-buttons">True</property>
+                            <child type="end">
+                              <object class="GtkButton">
+                                <property name="focusable">1</property>
+                                <property name="receives-default">1</property>
+                                <property name="tooltip-text" translatable="yes">Exit edit mode</property>
+                                <property name="icon-name">object-select-symbolic</property>
+                                <signal name="clicked" handler="exit_edit_mode" swapped="no"/>
+                              </object>
+                            </child>
+                            <child type="title">
+                              <object class="AdwWindowTitle">
+                                <property name="title" translatable="yes">Edit mode</property>
+                                <property name="subtitle" translatable="yes">Drag, to change order</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="selection-mode"/>
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkOverlay">
+                    <property name="vexpand">1</property>
+                    <property name="child">
+                      <object class="AdwViewStack" id="main_stack">
+                        <property name="vexpand">1</property>
+                        <child>
+                          <object class="AdwViewStackPage">
+                            <property name="name">servers</property>
+                            <property name="title" translatable="yes">Servers</property>
+                            <property name="icon-name">network-server-symbolic</property>
+                            <property name="child">
+                              <object class="AdwViewStack" id="servers_stack">
+                                <child>
+                                  <object class="AdwViewStackPage">
+                                    <property name="name">servers</property>
+                                    <property name="child">
+                                      <object class="GtkScrolledWindow" id="servers">
+                                        <property name="focusable">1</property>
+                                        <property name="hexpand">1</property>
+                                        <property name="vexpand">1</property>
+                                        <property name="child">
+                                          <object class="GtkViewport">
+                                            <child>
+                                              <object class="AdwClamp">
+                                                <property name="margin-start">18</property>
+                                                <property name="margin-end">18</property>
+                                                <property name="margin-top">18</property>
+                                                <property name="margin-bottom">18</property>
+                                                <child>
+                                                  <object class="GtkBox">
+                                                    <property name="orientation">vertical</property>
+                                                    <child>
+                                                      <object class="GtkLabel">
+                                                        <property name="halign">start</property>
+                                                        <property name="margin-bottom">12</property>
+                                                        <property name="label" translatable="yes">Servers</property>
+                                                        <attributes>
+                                                          <attribute name="weight" value="bold"></attribute>
+                                                        </attributes>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkListBox" id="servers_localhost_listbox">
+                                                        <property name="visible">0</property>
+                                                        <property name="selection-mode">none</property>
+                                                        <signal name="row-activated" handler="server_clicked" swapped="no"/>
+                                                        <style>
+                                                          <class name="boxed-list"/>
+                                                        </style>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkListBox" id="servers_listbox">
+                                                        <property name="selection-mode">none</property>
+                                                        <signal name="row-activated" handler="server_clicked" swapped="no"/>
+                                                        <style>
+                                                          <class name="boxed-list"/>
+                                                        </style>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkLabel" id="lan_games_label">
+                                                        <property name="visible">0</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="margin-top">18</property>
+                                                        <property name="margin-bottom">12</property>
+                                                        <property name="label" translatable="yes">LAN worlds</property>
+                                                        <attributes>
+                                                          <attribute name="weight" value="bold"></attribute>
+                                                        </attributes>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkListBox" id="lan_listbox">
+                                                        <property name="visible">0</property>
+                                                        <property name="selection-mode">none</property>
+                                                        <signal name="row-activated" handler="server_clicked" swapped="no"/>
+                                                        <style>
+                                                          <class name="boxed-list"/>
+                                                        </style>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwViewStackPage">
+                                    <property name="name">empty</property>
+                                    <property name="child">
+                                      <object class="GtkBox" id="servers_empty">
+                                        <property name="halign">center</property>
+                                        <property name="valign">center</property>
+                                        <property name="margin-start">18</property>
+                                        <property name="margin-end">18</property>
+                                        <property name="margin-top">18</property>
+                                        <property name="margin-bottom">18</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkImage">
+                                            <property name="margin-bottom">6</property>
+                                            <property name="pixel-size">128</property>
+                                            <property name="icon-name">network-server-symbolic</property>
+                                            <style>
+                                              <class name="dim-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="margin-bottom">1</property>
+                                            <property name="label" translatable="yes">No servers</property>
+                                            <style>
+                                              <class name="dim-label"/>
+                                              <class name="title-1"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="label" translatable="yes">No servers added and no LAN games found</property>
+                                            <property name="justify">center</property>
+                                            <property name="wrap">1</property>
+                                            <style>
+                                              <class name="dim-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwViewStackPage">
+                            <property name="name">players</property>
+                            <property name="title" translatable="yes">Players</property>
+                            <property name="icon-name">system-users-symbolic</property>
+                            <property name="child">
+                              <object class="GtkLabel">
+                                <property name="vexpand">1</property>
+                                <property name="label" translatable="yes">Players (not implemented yet)</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <child type="overlay">
+                      <object class="GtkRevealer" id="notification_revealer">
+                        <property name="halign">center</property>
+                        <property name="valign">start</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel" id="notification_label">
+                                <property name="label">(notification)</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="notification_button">
+                                <property name="label">(button)</property>
+                                <property name="focusable">1</property>
+                                <property name="receives-default">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="notification_close_button">
+                                <property name="focusable">1</property>
+                                <property name="receives-default">1</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="icon-name">window-close-symbolic</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="app-notification"/>
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewSwitcherBar" id="viewswitcher_bottom">
+                    <property name="stack">main_stack</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+
+        <child>
+          <object class="AdwLeafletPage">
+            <property name="name">server_info</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="name">server_info</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="AdwHeaderBar">
+                    <property name="show-end-title-buttons">True</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="focusable">1</property>
+                        <property name="receives-default">1</property>
+                        <property name="icon-name">go-previous-symbolic</property>
+                        <signal name="clicked" handler="back_clicked" swapped="no"/>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkMenuButton" id="infopage_menubutton">
+                        <property name="focusable">1</property>
+                        <property name="focus-on-click">0</property>
+                        <property name="receives-default">1</property>
+                        <property name="direction">none</property>
+                        <property name="menu-model">infopage-menu</property>
+                        <property name="icon-name">view-more-symbolic</property>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkButton" id="infopage_refresh_button">
+                        <property name="focusable">1</property>
+                        <property name="receives-default">1</property>
+                        <property name="tooltip-text" translatable="yes">Refresh</property>
+                        <property name="icon-name">view-refresh-symbolic</property>
+                        <signal name="clicked" handler="refresh_server" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="focusable">1</property>
+                    <property name="vexpand">1</property>
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="child">
+                      <object class="GtkViewport">
+                        <child>
+                          <object class="AdwClamp" id="infopage_clamp">
+                            <property name="margin-start">18</property>
+                            <property name="margin-end">18</property>
+                            <property name="margin-top">18</property>
+                            <property name="margin-bottom">18</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </template>
+</interface>

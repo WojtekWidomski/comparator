@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/WojtekWidomski/comparator">
+    <file>ui/window.ui</file>
+    <file>ui/server_listbox_row.ui</file>
+    <file>ui/server_listbox_row.css</file>
+    <file>ui/add_server_dialog.ui</file>
+    <file>ui/server_info_page.ui</file>
+    <file>ui/preferences_window.ui</file>
+    <file>ui/about_dialog.ui</file>
+    <file>icons/server-default.svg</file>
+    <file>icons/scalable/actions/system-users-symbolic.svg</file>
+  </gresource>
+</gresources>

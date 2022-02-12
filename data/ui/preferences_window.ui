@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="PreferencesWindow" parent="AdwPreferencesWindow">
+    <property name="title" translatable="yes">Preferences</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="title" translatable="yes">Page 1</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Servers list</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title" translatable="yes">Remove spaces</property>
+                <property name="activatable-widget">remove_spaces_switch</property>
+                <property name="subtitle" translatable="yes">Some servers use spaces to move text in description.</property>
+                <child>
+                  <object class="GtkSwitch" id="remove_spaces_switch">
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <signal name="state-set" handler="switch_remove_spaces" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

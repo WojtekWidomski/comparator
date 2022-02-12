@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkAboutDialog" id="AboutDialog">
+    <property name="modal">1</property>
+    <property name="authors">Wojtek Widomski</property>
+    <property name="comments" translatable="yes">Display Minecraft server status</property>
+    <property name="program-name">Comparator</property>
+    <property name="version">master</property>
+    <property name="license-type">GTK_LICENSE_GPL_3_0</property>
+    <property name="copyright">(C) 2022 Wojtek Widomski</property>
+  </object>
+</interface>

@@ -1,0 +1,46 @@
+.description {
+  font-size: smaller;
+}
+
+.server-row {
+  margin-left: 12px;
+  margin-right: 12px;
+  min-height: 50px;
+  transition-duration: 0.25s;
+}
+
+.server-row-small {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.server-row box.title {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.dragicon-row {
+  color: #77767b;
+  background-color: alpha(#77767b, 0.2);
+}
+
+.drag-previous {
+  border-bottom: 1px solid @success_color;
+}
+
+.drag-next {
+  border-top: 1px solid @success_color;
+}
+
+.drag-first {
+  border-top: 2px solid @success_color;
+}
+
+.drag-last {
+  border-bottom: 2px solid @success_color;
+}
+
+headerbar.selection-mode {
+  background-color: @accent_bg_color;
+  color: @light_1;
+}

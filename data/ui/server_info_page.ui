@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="ServerInfoPage" parent="GtkStack">
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">information</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkImage" id="icon">
+                    <property name="margin-top">5</property>
+                    <property name="pixel-size">64</property>
+                    <property name="icon-name">server-default</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="hexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="name_label">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">Server name</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="weight" value="ultrabold"></attribute>
+                          <attribute name="size" value="18000"></attribute>
+                        </attributes>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="description_label">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">Server description</property>
+                        <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="size" value="9000"></attribute>
+                        </attributes>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLevelBar" id="levelbar">
+                        <property name="margin-top">2</property>
+                        <property name="hexpand">1</property>
+                        <property name="value">0.40</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel" id="address">
+                    <property name="halign">start</property>
+                    <property name="label">(address)</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="port">
+                    <property name="halign">start</property>
+                    <property name="label">(port)</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="version">
+                    <property name="halign">start</property>
+                    <property name="label">(version)</property>
+                    <property name="wrap">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="additional_info_box">
+                <property name="orientation">vertical</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">Information</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="activate-on-single-click">0</property>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="focusable">1</property>
+                        <property name="activatable">0</property>
+                        <property name="selectable">0</property>
+                        <property name="child">
+                          <object class="GtkLabel" id="additional_info">
+                            <property name="halign">start</property>
+                            <property name="margin-start">6</property>
+                            <property name="margin-end">6</property>
+                            <property name="margin-top">6</property>
+                            <property name="margin-bottom">6</property>
+                            <property name="label" translatable="yes">Information</property>
+                            <property name="wrap">1</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">3</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkStack" id="players_list_stack">
+                        <child>
+                          <object class="GtkStackPage">
+                            <property name="name">error</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <property name="spacing">6</property>
+                                <child>
+                                  <object class="GtkImage" id="players_error_icon">
+                                    <property name="valign">start</property>
+                                    <property name="margin-top">1</property>
+                                    <property name="icon-name">dialog-warning-symbolic</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="players_error_title">
+                                    <property name="label" translatable="yes">Can not get players list</property>
+                                    <property name="wrap">1</property>
+                                    <property name="xalign">0</property>
+                                    <attributes>
+                                      <attribute name="weight" value="bold"></attribute>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkStackPage">
+                            <property name="name">players</property>
+                            <property name="child">
+                              <object class="GtkLabel">
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Players</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"></attribute>
+                                </attributes>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="players_number">
+                        <property name="valign">start</property>
+                        <property name="halign">end</property>
+                        <property name="hexpand">1</property>
+                        <property name="label">(online/max players)</property>
+                        <property name="justify">right</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStack" id="players_list_stack2">
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">players</property>
+                        <property name="child">
+                          <object class="GtkListBox" id="listbox">
+                            <property name="margin-top">6</property>
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">error</property>
+                        <property name="child">
+                          <object class="GtkLabel" id="players_error_description">
+                            <property name="label" translatable="yes">Players displaying is disabled on server.</property>
+                            <property name="wrap">1</property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">spinner</property>
+        <property name="child">
+          <object class="GtkSpinner">
+            <property name="spinning">True</property>
+            <property name="width-request">32</property>
+            <property name="height-request">32</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">error</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkImage">
+                <property name="margin-bottom">6</property>
+                <property name="pixel-size">128</property>
+                <property name="icon-name">network-error-symbolic</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Can not connect to server</property>
+                <property name="justify">center</property>
+                <property name="wrap">1</property>
+                <style>
+                  <class name="dim-label"/>
+                  <class name="title-1"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="error_description">
+                <property name="label" translatable="yes">Make sure address is correct</property>
+                <property name="justify">center</property>
+                <property name="wrap">1</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

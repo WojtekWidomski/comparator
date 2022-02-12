@@ -1,0 +1,242 @@
+# Comparator Polish translation
+# Copyright (C) 2022 Wojtek Widomski
+# This file is distributed under the same license as the comparator package.
+# Wojtek Widomski <98206524+WojtekWidomski@users.noreply.github.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: comparator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-11 11:13+0100\n"
+"PO-Revision-Date: 2022-02-11 11:46+0100\n"
+"Last-Translator: Wojtek Widomski <98206524+WojtekWidomski@users.noreply.github.com>\n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.WojtekWidomski.comparator.desktop.in:3
+msgid "Comparator"
+msgstr "Komparator"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:6 data/ui/window.ui:146
+#: data/ui/window.ui:173
+msgid "Servers"
+msgstr "Serwery"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:7
+msgid "Servers added to application"
+msgstr "Serwery dodane do aplikacji"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:12
+msgid "Window width"
+msgstr "Szerokość okna"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:17
+msgid "Window height"
+msgstr "Wysokość okna"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:22
+msgid "Remove unneeded spaces in servers descrpitions"
+msgstr "Usuń niepotrzebne spacje w opisach serwerów"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:23
+msgid ""
+"Some servers use spaces to move description text. This often looks bad in "
+"this application."
+msgstr ""
+"Niektóre serwery przesuwają tekst opisu spacjami, co nie wygląda "
+"dobrze w tym programie."
+
+#: data/ui/window.ui:9 data/ui/window.ui:22
+msgid "Edit"
+msgstr "Edytuj"
+
+#: data/ui/window.ui:13
+msgid "Remove server"
+msgstr "Usuń serwer"
+
+#: data/ui/window.ui:28
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: data/ui/window.ui:32
+msgid "About"
+msgstr "O programie"
+
+#: data/ui/window.ui:89 src/window.py:93
+msgid "Add server"
+msgstr "Dodaj serwer"
+
+#: data/ui/window.ui:98 data/ui/window.ui:378
+msgid "Refresh"
+msgstr "Odśwież"
+
+#: data/ui/window.ui:117
+msgid "Exit edit mode"
+msgstr "Zakończ edycję"
+
+#: data/ui/window.ui:124
+msgid "Edit mode"
+msgstr "Tryb edycji"
+
+#: data/ui/window.ui:125
+msgid "Drag, to change order"
+msgstr "Przesuń, by zmienić kolejność"
+
+#: data/ui/window.ui:204
+msgid "LAN worlds"
+msgstr "Gry w sieci lokalnej"
+
+#: data/ui/window.ui:255
+msgid "No servers"
+msgstr "Brak serwerów"
+
+#: data/ui/window.ui:264
+msgid "No servers added and no LAN games found"
+msgstr "Nie dodano serwerów, ani nie wykryto gier w sieci lokalnej"
+
+#: data/ui/window.ui:283 data/ui/server_info_page.ui:168
+msgid "Players"
+msgstr "Gracze"
+
+#: data/ui/window.ui:288
+msgid "Players (not implemented yet)"
+msgstr "Gracze (jeszcze nie zaimplementowane)"
+
+#: data/ui/about_dialog.ui:6
+msgid "Display Minecraft server status"
+msgstr "Program do wyświetlania informacji o serwerach Minecraft"
+
+#: data/ui/add_server_dialog.ui:32 data/ui/server_info_page.ui:29
+msgid "Server name"
+msgstr "Nazwa serwera"
+
+#: data/ui/add_server_dialog.ui:48
+msgid "Server address"
+msgstr "Adres serwera"
+
+#: data/ui/add_server_dialog.ui:66
+msgid "Address is not correct"
+msgstr "Adres jest nieprawidłowy"
+
+#: data/ui/add_server_dialog.ui:83
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: data/ui/add_server_dialog.ui:90 src/window.py:93
+msgid "Add"
+msgstr "Dodaj"
+
+#: data/ui/preferences_window.ui:6
+msgid "Preferences"
+msgstr "Ustawienia"
+
+#: data/ui/preferences_window.ui:9
+msgid "Page 1"
+msgstr "Strona 1"
+
+#: data/ui/preferences_window.ui:12
+msgid "Servers list"
+msgstr "Lista serwerów"
+
+#: data/ui/preferences_window.ui:15
+msgid "Remove spaces"
+msgstr "Usuń niepotrzebne spacje"
+
+#: data/ui/preferences_window.ui:17
+msgid "Some servers use spaces to move text in description."
+msgstr "Niektóre serwery używają spacji do przesuwania tekstu w opisie"
+
+#: data/ui/server_info_page.ui:40 data/ui/server_listbox_row.ui:97
+msgid "Server description"
+msgstr "Opis serwera"
+
+#: data/ui/server_info_page.ui:91 data/ui/server_info_page.ui:113
+msgid "Information"
+msgstr "Informacje"
+
+#: data/ui/server_info_page.ui:150 src/infopage.py:101
+msgid "Can not get players list"
+msgstr "Nie można uzyskać listy graczy"
+
+#: data/ui/server_info_page.ui:210 src/infopage.py:102
+msgid "Players displaying is disabled on server."
+msgstr "Wyświetlanie graczy zostało wyłączone na serwerze."
+
+#: data/ui/server_info_page.ui:259 src/server_listbox_row.py:111
+msgid "Can not connect to server"
+msgstr "Nie można połączyć się z serwerem"
+
+#: data/ui/server_info_page.ui:270
+msgid "Make sure address is correct"
+msgstr "Sprawdź, czy adres jest prawidłowy"
+
+#: data/ui/server_listbox_row.ui:55
+msgid "Server"
+msgstr "Serwer"
+
+#: data/ui/server_listbox_row.ui:82
+msgid "0"
+msgstr "0"
+
+#: src/window.py:89
+msgid "Save"
+msgstr "Zapisz"
+
+#: src/window.py:89
+msgid "Edit server"
+msgstr "Edytuj serwer"
+
+#: src/window.py:205
+msgid "{} removed"
+msgstr "Usunięto {}"
+
+#: src/window.py:206
+msgid "Undo"
+msgstr "Cofnij"
+
+#: src/window.py:277 src/server_manager.py:58 src/server_manager.py:60
+#: src/server_manager.py:62
+msgid "This computer"
+msgstr "Ten komputer"
+
+#. online/max players
+#: src/infopage.py:39 src/server_listbox_row.py:101
+msgid "players"
+msgstr "graczy"
+
+#. Adres, port i wersja
+#: src/infopage.py:74
+msgid "Address"
+msgstr "Adres"
+
+#: src/infopage.py:75
+msgid "Port"
+msgstr "Port"
+
+#: src/infopage.py:76
+msgid "Version"
+msgstr "Wersja"
+
+#: src/infopage.py:97
+msgid "No players"
+msgstr "Brak graczy"
+
+#: src/infopage.py:98
+msgid "No one is playing on this server now."
+msgstr "Nie ma nikogo na tym serwerze."
+
+#: src/server_listbox_row.py:75
+msgid "Connecting..."
+msgstr "Trwa łączenie..."
+
+#: src/server_listbox_row.py:168
+msgid "Make sure address <b>"
+msgstr "Sprawdź, czy adres <b>"
+
+#: src/server_listbox_row.py:170
+msgid "</b> is correct"
+msgstr "</b> jest prawidłowy"

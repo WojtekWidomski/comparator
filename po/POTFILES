@@ -1,0 +1,15 @@
+data/io.github.WojtekWidomski.comparator.desktop.in
+data/io.github.WojtekWidomski.comparator.appdata.xml.in
+data/io.github.WojtekWidomski.comparator.gschema.xml
+data/ui/window.ui
+data/ui/about_dialog.ui
+data/ui/add_server_dialog.ui
+data/ui/preferences_window.ui
+data/ui/server_info_page.ui
+data/ui/server_listbox_row.ui
+src/main.py
+src/window.py
+src/infopage.py
+src/server_listbox_row.py
+src/server_manager.py
+
