@@ -86,6 +86,13 @@ class ComparatorWindow(Adw.ApplicationWindow):
         if loaded_servers_count == 0:
             self.servers_stack.set_visible_child_name("empty")
 
+        style_manager = Adw.StyleManager.get_default()
+        dark_mode = self.settings.load("dark-mode")
+        if dark_mode:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+        else:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+
         self.create_action("edit_list", self.edit_list)
         self.create_action("edit_server", self.edit_clicked)
         self.create_action("remove_server", self.remove_clicked)

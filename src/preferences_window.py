@@ -23,6 +23,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
 
     remove_spaces_switch = Gtk.Template.Child()
+    dark_mode_switch = Gtk.Template.Child()
 
     def __init__(self, settings, servers_manager, **kwargs):
         super().__init__(**kwargs)
@@ -32,8 +33,19 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
         self.remove_spaces_switch.set_state(
             self.settings.load("remove-spaces"))
+        self.dark_mode_switch.set_state(
+            self.settings.load("dark-mode"))
 
     @Gtk.Template.Callback()
     def switch_remove_spaces(self, switch, state):
         self.settings.save_bool("remove-spaces", state)
         self.servers_manager.set_remove_spaces(state)
+
+    @Gtk.Template.Callback()
+    def switch_dark_mode(self, switch, state):
+        style_manager = Adw.StyleManager.get_default()
+        if state:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+        else:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+        self.settings.save_bool("dark-mode", state)

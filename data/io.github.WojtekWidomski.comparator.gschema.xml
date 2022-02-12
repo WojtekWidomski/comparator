@@ -22,5 +22,11 @@
 	    <summary>Remove unneeded spaces in servers descrpitions</summary>
 	    <description>Some servers use spaces to move description text. This often looks bad in this application.</description>
 	  </key>
+
+	  <key name="dark-mode" type="b">
+	    <default>false</default>
+	    <summary>Dark mode</summary>
+	    <description>Dark mode</description>
+	  </key>
 	</schema>
 </schemalist>
