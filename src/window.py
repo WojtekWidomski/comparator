@@ -87,11 +87,9 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.servers_stack.set_visible_child_name("empty")
 
         style_manager = Adw.StyleManager.get_default()
-        dark_mode = self.settings.load("dark-mode")
-        if dark_mode:
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
-        else:
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+        style_manager.connect("notify::system-supports-color-schemes",
+                              self.notify_system_supports_color_schemes)
+        self.notify_system_supports_color_schemes(style_manager, None)
 
         self.create_action("edit_list", self.edit_list)
         self.create_action("edit_server", self.edit_clicked)
@@ -103,6 +101,16 @@ class ComparatorWindow(Adw.ApplicationWindow):
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", function)
         self.add_action(action)
+
+    def notify_system_supports_color_schemes(self, style_manager, supports):
+        if style_manager.get_system_supports_color_schemes():
+            style_manager.set_color_scheme(Adw.ColorScheme.PREFER_LIGHT)
+        else:
+            dark_mode = self.settings.load("dark-mode")
+            if dark_mode:
+                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+            else:
+                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
 
 
     @Gtk.Template.Callback()

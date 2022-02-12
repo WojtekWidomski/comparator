@@ -24,6 +24,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     remove_spaces_switch = Gtk.Template.Child()
     dark_mode_switch = Gtk.Template.Child()
+    ui_preferences_group = Gtk.Template.Child()
 
     def __init__(self, settings, servers_manager, **kwargs):
         super().__init__(**kwargs)
@@ -33,8 +34,21 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
         self.remove_spaces_switch.set_state(
             self.settings.load("remove-spaces"))
-        self.dark_mode_switch.set_state(
-            self.settings.load("dark-mode"))
+
+        style_manager = Adw.StyleManager.get_default()
+        style_manager.connect("notify::system-supports-color-schemes",
+                              self.notify_system_supports_color_schemes)
+        self.notify_system_supports_color_schemes(style_manager, None)
+
+    def notify_system_supports_color_schemes(self, style_manager, supports):
+        # ui_preferences_group contains only dark_mode_switch for now, so we
+        # need to hide entire group
+        if style_manager.get_system_supports_color_schemes():
+            self.ui_preferences_group.set_visible(False)
+        else:
+            self.ui_preferences_group.set_visible(True)
+            self.dark_mode_switch.set_state(
+                self.settings.load("dark-mode"))
 
     @Gtk.Template.Callback()
     def switch_remove_spaces(self, switch, state):
