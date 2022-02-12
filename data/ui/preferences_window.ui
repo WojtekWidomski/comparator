@@ -31,7 +31,7 @@
             <property name="title" translatable="yes">User interface</property>
             <child>
               <object class="AdwActionRow">
-                <property name="title">Dark mode</property>
+                <property name="title" translatable="yes">Dark mode</property>
                 <property name="activatable-widget">dark_mode_switch</property>
                 <child>
                   <object class="GtkSwitch" id="dark_mode_switch">

@@ -50,6 +50,12 @@ msgstr ""
 "Niektóre serwery przesuwają tekst opisu spacjami, co nie wygląda "
 "dobrze w tym programie."
 
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:28
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:29
+#: data/ui/preferences_window.ui:34
+msgid "Dark mode"
+msgstr "Tryb ciemny"
+
 #: data/ui/window.ui:9 data/ui/window.ui:22
 msgid "Edit"
 msgstr "Edytuj"
@@ -149,6 +155,10 @@ msgstr "Usuń niepotrzebne spacje"
 #: data/ui/preferences_window.ui:17
 msgid "Some servers use spaces to move text in description."
 msgstr "Niektóre serwery używają spacji do przesuwania tekstu w opisie"
+
+#: data/ui/preferences_window.ui:31
+msgid "User interface"
+msgstr "Interfejs użytkownika"
 
 #: data/ui/server_info_page.ui:40 data/ui/server_listbox_row.ui:97
 msgid "Server description"
