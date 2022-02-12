@@ -6,7 +6,7 @@ GTK4 application to display Minecraft server status.
 * display servers icon, description, version and online players
 * detect server on localhost
 * show LAN worlds
-* formatted descriptions
+* formatted descriptions (including obfuscated text)
 
 ## Why it is written in Python
 * There is Python module [mcstatus](https://github.com/Dinnerbone/mcstatus)
