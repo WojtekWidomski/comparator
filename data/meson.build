@@ -44,6 +44,14 @@ install_data('io.github.WojtekWidomski.comparator.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 
+install_data('icons/scalable/apps/io.github.WojtekWidomski.comparator.svg',
+  install_dir: join_paths(get_option('datadir'), 'icons/hicolor/scalable/apps')
+)
+
+install_data('icons/symbolic/apps/io.github.WojtekWidomski.comparator-symbolic.svg',
+  install_dir: join_paths(get_option('datadir'), 'icons/hicolor/symbolic/apps')
+)
+
 compile_schemas = find_program('glib-compile-schemas', required: false)
 if compile_schemas.found()
   test('Validate schema file', compile_schemas,

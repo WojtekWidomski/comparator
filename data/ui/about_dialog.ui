@@ -8,5 +8,6 @@
     <property name="version">master</property>
     <property name="license-type">GTK_LICENSE_GPL_3_0</property>
     <property name="copyright">(C) 2022 Wojtek Widomski</property>
+    <property name="logo-icon-name">io.github.WojtekWidomski.comparator</property>
   </object>
 </interface>

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Comparator
 Exec=comparator
+Icon=io.github.WojtekWidomski.comparator
 Terminal=false
 Type=Application
 Categories=GTK;Game;
