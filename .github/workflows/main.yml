@@ -33,6 +33,7 @@ jobs:
           sudo apt-get install flatpak flatpak-builder
           sudo flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
           sudo flatpak install -y gnome-nightly org.gnome.Sdk
+          sudo flatpak install -y gnome-nightly org.gnome.Platform
           
       - name: Build
         run: |
