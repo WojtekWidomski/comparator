@@ -38,7 +38,7 @@ jobs:
           flatpak build-bundle repo comparator.flatpak io.github.WojtekWidomski.comparator
           
       - name: Artifacts
-        uses: actions/upload-artifacts@v2
+        uses: actions/upload-artifact@v2
         with:
           name: flatpak-bundle
           path: |
