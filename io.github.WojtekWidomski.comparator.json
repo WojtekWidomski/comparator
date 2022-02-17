@@ -125,7 +125,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/wojtek/Programowanie/comparator"
+                    "url" : "https://github.com/WojtekWidomski/comparator"
                 }
             ]
         }
