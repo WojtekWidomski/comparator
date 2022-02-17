@@ -17,32 +17,15 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  flatpak:
+    name: "Flatpak"
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-41
+      options: --privileged
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Install Flatpak Builder and GNOME Sdk
-        run: |
-          sudo apt-get update
-          sudo apt-get install flatpak flatpak-builder
-          sudo flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-          sudo flatpak install -y gnome-nightly org.gnome.Sdk
-          sudo flatpak install -y gnome-nightly org.gnome.Platform
-          
-      - name: Build
-        run: |
-          flatpak-builder --repo=repo build-dir io.github.WojtekWidomski.comparator.json
-          flatpak build-bundle repo comparator.flatpak io.github.WojtekWidomski.comparator
-          
-      - name: Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: flatpak-bundle
-          path: |
-            comparator.flatpak
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+      with:
+        bundle: io.github.WojtekWidomski.comparator.flatpak
+        manifest-path: io.github.WojtekWidomski.comparator.json
