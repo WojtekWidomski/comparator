@@ -154,6 +154,7 @@ class ServerManager:
         self.load_localhost_servers()
         lan_thread = threading.Thread(target=self.load_lan_games)
         lan_thread.start()
+        GLib.timeout_add(15000, self.refresh_all)
         return len(saved)
 
     def change_loading_number(self, number):
@@ -169,6 +170,7 @@ class ServerManager:
         for server in self.servers_localhost_listbox:
             server.refresh()
         self.load_localhost_servers()
+        return True
 
     def add(self, name, address):
         row = ServerListboxRow(name, address,
