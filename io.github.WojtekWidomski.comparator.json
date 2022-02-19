@@ -2,6 +2,7 @@
     "app-id" : "io.github.WojtekWidomski.comparator",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
+    "appstream-compose" : false,
     "sdk" : "org.gnome.Sdk",
     "command" : "comparator",
     "finish-args" : [
@@ -125,7 +126,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/wojtek/Programowanie/comparator"
+                    "url" : "https://github.com/WojtekWidomski/comparator"
                 }
             ]
         }
