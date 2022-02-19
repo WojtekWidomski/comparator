@@ -210,10 +210,10 @@ class ComparatorWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def server_clicked(self, listbox, listboxrow):
         if not self.edit_mode:
-     :         self.clicked_server = listboxrow
+            self.clicked_server = listboxrow
             listboxrow.infopage_displaying = True
-                listboxrow.clicked  ()
-            i   f listboxrow.edit:
+            listboxrow.clicked()
+            if listboxrow.edit:
                 self.infopage_menubutton.set_visible(True)
             else:
                 self.infopage_menubutton.set_visible(False)
