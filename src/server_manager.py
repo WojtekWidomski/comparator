@@ -47,6 +47,8 @@ class ServerManager:
         self.lan_games_loading = True
 
         self.remove_spaces = Settings().load("remove-spaces")
+        self.auto_refresh_time = Settings().gsettings.get_int("auto-refresh-time")
+        self.auto_refresh_timeout = None
 
     def load_localhost_servers(self):
         ports = []
@@ -154,8 +156,15 @@ class ServerManager:
         self.load_localhost_servers()
         lan_thread = threading.Thread(target=self.load_lan_games)
         lan_thread.start()
-        GLib.timeout_add(15000, self.refresh_all)
+        self.add_autorefresh_timeout()
         return len(saved)
+
+    def add_autorefresh_timeout(self):
+        if self.auto_refresh_timeout != None:
+            GLib.source_remove(self.auto_refresh_timeout)
+        if self.auto_refresh_time != 0:
+            self.auto_refresh_timeout = GLib.timeout_add(self.auto_refresh_time*1000,
+                                                         self.refresh_all)
 
     def change_loading_number(self, number):
         self.loading_number += number

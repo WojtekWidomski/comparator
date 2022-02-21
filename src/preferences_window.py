@@ -25,6 +25,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     remove_spaces_switch = Gtk.Template.Child()
     dark_mode_switch = Gtk.Template.Child()
     ui_preferences_group = Gtk.Template.Child()
+    auto_refresh_spin_button = Gtk.Template.Child()
 
     def __init__(self, settings, servers_manager, **kwargs):
         super().__init__(**kwargs)
@@ -34,6 +35,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
         self.remove_spaces_switch.set_state(
             self.settings.load("remove-spaces"))
+
+        self.auto_refresh_spin_button.set_value(
+            self.settings.gsettings.get_int("auto-refresh-time")
+        )
 
         style_manager = Adw.StyleManager.get_default()
         style_manager.connect("notify::system-supports-color-schemes",
@@ -63,3 +68,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
         else:
             style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
         self.settings.save_bool("dark-mode", state)
+
+    @Gtk.Template.Callback()
+    def auto_refresh_value_changed(self, spin_button):
+        time = spin_button.get_value()
+        self.servers_manager.auto_refresh_time = time
+        self.servers_manager.add_autorefresh_timeout()
+        self.settings.gsettings.set_int("auto-refresh-time", time)
