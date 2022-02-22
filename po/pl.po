@@ -56,6 +56,15 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Tryb ciemny"
 
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:34
+#: data/ui/preferences_window.ui:29
+msgid "Auto refresh time"
+msgstr "Okres automatycznego odświeżania"
+
+#: data/io.github.WojtekWidomski.comparator.gschema.xml:35
+msgid "Servers autorefresh time. Use 0 to disable."
+msgstr "Okres automatycznego odświeżania. Użyj 0, żeby wyłączyć."
+
 #: data/ui/window.ui:9 data/ui/window.ui:22
 msgid "Edit"
 msgstr "Edytuj"
@@ -155,6 +164,10 @@ msgstr "Usuń niepotrzebne spacje"
 #: data/ui/preferences_window.ui:17
 msgid "Some servers use spaces to move text in description."
 msgstr "Niektóre serwery używają spacji do przesuwania tekstu w opisie"
+
+#: data/ui/preferences_window.ui:30
+msgid "Use 0 to disable"
+msgstr "Użyj 0, żeby wyłączyć"
 
 #: data/ui/preferences_window.ui:31
 msgid "User interface"
