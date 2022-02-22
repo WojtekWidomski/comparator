@@ -164,8 +164,9 @@ class ServerListboxRow(Gtk.ListBoxRow):
         self.remove_spaces = remove_spaces
         self.format_description()
 
-    def refresh(self):
-        self.icon_stack.set_visible_child_name("spinner")
+    def refresh(self, display_spinner=True):
+        if display_spinner:
+            self.icon_stack.set_visible_child_name("spinner")
         self.loading_data = True
         self.change_loading_number(1)
         self.server.load(self.set_data)

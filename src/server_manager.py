@@ -165,7 +165,7 @@ class ServerManager:
             self.auto_refresh_timeout = None
         if self.auto_refresh_time != 0:
             self.auto_refresh_timeout = GLib.timeout_add(self.auto_refresh_time*1000,
-                                                         self.refresh_all)
+                                                         self.refresh_all, False)
 
     def change_loading_number(self, number):
         self.loading_number += number
@@ -174,11 +174,11 @@ class ServerManager:
         else:
             self.refresh_button.set_sensitive(True)
 
-    def refresh_all(self):
+    def refresh_all(self, display_spinner=True):
         for server in self.servers_listbox:
-            server.refresh()
+            server.refresh(display_spinner=display_spinner)
         for server in self.servers_localhost_listbox:
-            server.refresh()
+            server.refresh(display_spinner=display_spinner)
         self.load_localhost_servers()
         return True
 
