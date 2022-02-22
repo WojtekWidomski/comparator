@@ -28,5 +28,11 @@
 	    <summary>Dark mode</summary>
 	    <description>Dark mode</description>
 	  </key>
+
+	  <key name="auto-refresh-time" type="i">
+	    <default>30</default>
+	    <summary>Auto refresh time</summary>
+	    <description>Servers autorefresh time. Use 0 to disable.</description>
+	  </key>
 	</schema>
 </schemalist>
