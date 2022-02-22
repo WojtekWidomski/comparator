@@ -162,6 +162,7 @@ class ServerManager:
     def add_autorefresh_timeout(self):
         if self.auto_refresh_timeout != None:
             GLib.source_remove(self.auto_refresh_timeout)
+            self.auto_refresh_timeout = None
         if self.auto_refresh_time != 0:
             self.auto_refresh_timeout = GLib.timeout_add(self.auto_refresh_time*1000,
                                                          self.refresh_all)
