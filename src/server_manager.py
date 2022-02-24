@@ -107,8 +107,8 @@ class ServerManager:
         while self.lan_games_loading:
             try:
                 data, address = s.recvfrom(1024)
+                description, port = data.decode().replace("[MOTD]", "").replace("[/AD]", "").split("[/MOTD][AD]")
                 if not (data, address) in self.lan_games_timeouts:
-                    description, port = data.decode().replace("[MOTD]", "").replace("[/AD]", "").split("[/MOTD][AD]")
                     admin, world = description.split(" - ", 1)
                     row = ServerListboxRow(world, address[0] + ":" + port,
                                               self.servers_leaflet,
@@ -119,15 +119,15 @@ class ServerManager:
                     GLib.idle_add(self.lan_listbox.append, row)
                     GLib.idle_add(self.lan_listbox.set_visible, True)
                     GLib.idle_add(self.lan_games_label.set_visible, True)
-                    if address[0] == socket.gethostbyname(socket.gethostname()):
-                        for localhostrow in self.servers_localhost_listbox:
-                            if localhostrow.address == "localhost:" + port:
-                                self.servers_localhost_list.remove(localhostrow)
-                                self.servers_localhost_listbox.remove(localhostrow)
 
                 else:
                     GLib.source_remove(self.lan_games_timeouts[(data, address)])
                     self.lan_games_timeouts.pop((data, address))
+                if address[0] == socket.gethostbyname(socket.gethostname()):
+                    for localhostrow in self.servers_localhost_listbox:
+                        if localhostrow.address == "localhost:" + port:
+                            self.removed_localhost_server_function(localhostrow)
+                            self.servers_localhost_listbox.remove(localhostrow)
                 self.lan_games_timeouts[(data, address)] = GLib.timeout_add(
                     5000, self.remove_lan_world, row, (data, address), port)
                 self.lan_games.add((address[0], port))
