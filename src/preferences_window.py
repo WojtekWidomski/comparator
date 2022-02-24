@@ -40,19 +40,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.settings.gsettings.get_int("auto-refresh-time")
         )
 
-        style_manager = Adw.StyleManager.get_default()
-        style_manager.connect("notify::system-supports-color-schemes",
-                              self.notify_system_supports_color_schemes)
-        self.notify_system_supports_color_schemes(style_manager, None)
-
-    def notify_system_supports_color_schemes(self, style_manager, supports):
-        # ui_preferences_group contains only dark_mode_switch for now, so we
-        # need to hide entire group
-        if style_manager.get_system_supports_color_schemes():
-            self.ui_preferences_group.set_visible(False)
-        else:
-            self.ui_preferences_group.set_visible(True)
-            self.dark_mode_switch.set_state(
+        self.dark_mode_switch.set_state(
                 self.settings.load("dark-mode"))
 
     @Gtk.Template.Callback()
@@ -66,7 +54,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         if state:
             style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
         else:
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+            style_manager.set_color_scheme(Adw.ColorScheme.PREFER_LIGHT)
         self.settings.save_bool("dark-mode", state)
 
     @Gtk.Template.Callback()
