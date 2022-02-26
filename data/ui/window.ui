@@ -239,6 +239,18 @@
                                     </property>
                                   </object>
                                 </child>
+                                <child>
+                                  <object class="AdwViewStackPage">
+                                    <property name="name">no_network</property>
+                                    <property name="child">
+                                      <object class="AdwStatusPage" id="servers_no_network">
+                                        <property name="title">No network connection</property>
+                                        <property name="description">Connect to network using cable or Wi-Fi</property>
+                                        <property name="icon-name">network-wired-disconnected-symbolic</property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
                               </object>
                             </property>
                           </object>
