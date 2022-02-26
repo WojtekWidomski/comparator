@@ -240,41 +240,10 @@
       <object class="GtkStackPage">
         <property name="name">error</property>
         <property name="child">
-          <object class="GtkBox">
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkImage">
-                <property name="margin-bottom">6</property>
-                <property name="pixel-size">128</property>
-                <property name="icon-name">network-error-symbolic</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Can not connect to server</property>
-                <property name="justify">center</property>
-                <property name="wrap">1</property>
-                <style>
-                  <class name="dim-label"/>
-                  <class name="title-1"/>
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="error_description">
-                <property name="label" translatable="yes">Make sure address is correct</property>
-                <property name="justify">center</property>
-                <property name="wrap">1</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-            </child>
+          <object class="AdwStatusPage" id="error_status_page">
+            <property name="title">Can not connect to server</property>
+            <property name="description">Make sure address is correct</property>
+            <property name="icon-name">network-error-symbolic</property>
           </object>
         </property>
       </object>

@@ -188,7 +188,7 @@ class ServerListboxRow(Gtk.ListBoxRow):
         self.infopage.players_list_remove_all()
         self.infopage.additional_info_box.set_visible(False)
         self.infopage.set_visible_child_name("error")
-        self.infopage.error_description.set_markup(_("Make sure address <b>") +
+        self.infopage.error_status_page.set_description(_("Make sure address <b>") +
                                                    self.address +
                                                     _("</b> is correct"))
 
