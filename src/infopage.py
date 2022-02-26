@@ -40,7 +40,7 @@ class ServerInfoPage(Gtk.Stack):
     players_error_icon = Gtk.Template.Child()
     players_error_description = Gtk.Template.Child()
 
-    error_description = Gtk.Template.Child()
+    error_status_page = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
