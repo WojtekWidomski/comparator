@@ -50,7 +50,7 @@ class ServerManager:
         self.auto_refresh_time = Settings().gsettings.get_int("auto-refresh-time")
         self.auto_refresh_timeout = None
 
-        self.network_available = False
+        self.network_available = True
         network_monitor = Gio.NetworkMonitor.get_default()
         network_monitor.connect("network-changed", self.network_changed)
 
@@ -189,11 +189,12 @@ class ServerManager:
             self.refresh_button.set_sensitive(True)
 
     def refresh_all(self, display_spinner=True):
-        for server in self.servers_listbox:
-            server.refresh(display_spinner=display_spinner)
-        for server in self.servers_localhost_listbox:
-            server.refresh(display_spinner=display_spinner)
-        self.load_localhost_servers()
+        if self.network_available:
+            for server in self.servers_listbox:
+                server.refresh(display_spinner=display_spinner)
+            for server in self.servers_localhost_listbox:
+                server.refresh(display_spinner=display_spinner)
+            self.load_localhost_servers()
         return True
 
     def add(self, name, address):
