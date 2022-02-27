@@ -82,7 +82,7 @@ class Server:
         try:
             query = self.server.query()
             players_query = query.players.names
-        except timeout:
+        except (timeout, OSError):
             players_query = None
 
         if players_query != None:

@@ -83,7 +83,7 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton">
+                              <object class="GtkButton" id="add_server_button">
                                 <property name="focusable">1</property>
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Add server</property>
@@ -235,6 +235,18 @@
                                         <property name="title">No servers</property>
                                         <property name="description">No servers added and no LAN games found</property>
                                         <property name="icon-name">network-server-symbolic</property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwViewStackPage">
+                                    <property name="name">no_network</property>
+                                    <property name="child">
+                                      <object class="AdwStatusPage" id="servers_no_network">
+                                        <property name="title" translatable="yes">No network connection</property>
+                                        <property name="description" translatable="yes">Connect to network using cable or Wi-Fi</property>
+                                        <property name="icon-name">network-wired-disconnected-symbolic</property>
                                       </object>
                                     </property>
                                   </object>

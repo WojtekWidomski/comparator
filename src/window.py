@@ -45,6 +45,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
     notification_button_signal_id = None
     notification_close_signal_id = None
 
+    add_server_button = Gtk.Template.Child()
     refresh_button = Gtk.Template.Child()
     infopage_refresh_button = Gtk.Template.Child()
     infopage_menubutton = Gtk.Template.Child()
@@ -59,6 +60,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
     drag_row_after = None
 
     removing = False
+
+    last_network_state = True
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -98,6 +101,27 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
 
+        network_monitor = Gio.NetworkMonitor.get_default()
+        network_monitor.connect("network-changed", self.network_changed)
+
+    def network_changed(self, monitor, available):
+        if available != self.last_network_state:
+            if available:
+                self.servers_stack.set_visible_child_name("servers")
+                self.add_server_button.set_visible(True)
+                self.refresh_button.set_visible(True)
+                self.lookup_action("edit_list").set_enabled(True)
+                self.servers_manager.refresh_all()
+            else:
+                self.servers_stack.set_visible_child_name("no_network")
+                self.add_server_button.set_visible(False)
+                self.refresh_button.set_visible(False)
+                self.lookup_action("edit_list").set_enabled(False)
+                if self.servers_leaflet.get_visible_child_name() == "server_info":
+                    self.back_clicked(None)
+                if self.edit_mode:
+                    self.exit_edit_mode(None)
+            self.last_network_state = available
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)

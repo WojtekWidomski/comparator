@@ -113,6 +113,14 @@ msgstr "Brak serwerów"
 msgid "No servers added and no LAN games found"
 msgstr "Nie dodano serwerów, ani nie wykryto gier w sieci lokalnej"
 
+#: data/ui/window.ui:247
+msgid "No network connection"
+msgstr "Brak połączenia z siecią"
+
+#: data/ui/window.ui:248
+msgid "Connect to network using cable or Wi-Fi"
+msgstr "Połącz się z siecią używając kabla lub Wi-Fi"
+
 #: data/ui/window.ui:283 data/ui/server_info_page.ui:168
 msgid "Players"
 msgstr "Gracze"
