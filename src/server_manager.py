@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Adw, Gdk, GLib, GObject
+from gi.repository import Gtk, Adw, Gdk, GLib, GObject, Gio
 import socket, struct, threading
 from subprocess import check_output
 from .server_listbox_row import ServerListboxRow
@@ -49,6 +49,15 @@ class ServerManager:
         self.remove_spaces = Settings().load("remove-spaces")
         self.auto_refresh_time = Settings().gsettings.get_int("auto-refresh-time")
         self.auto_refresh_timeout = None
+
+        self.network_available = False
+        network_monitor = Gio.NetworkMonitor.get_default()
+        network_monitor.connect("network-changed", self.network_changed)
+
+    def network_changed(self, monitor, available):
+        self.network_available = available
+        if available and not self.lan_games_loading:
+            self.start_lan_thread()
 
     def load_localhost_servers(self):
         ports = []
@@ -92,18 +101,7 @@ class ServerManager:
             self.servers_localhost_listbox.set_margin_bottom(12)
             self.servers_localhost_listbox.set_visible(True)
 
-    def load_lan_games(self):
-        # Minecraft sends multicasts, when hosting LAN world.
-        # Address:224.0.2.60 Port:4445
-        s = socket.socket(type=socket.SOCK_DGRAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind(('', 4445))
-        mreq = struct.pack("4si", socket.inet_aton("224.0.2.60"),
-                           socket.INADDR_ANY)
-        s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-
-        s.settimeout(5)
-
+    def load_lan_games(self, s):
         while self.lan_games_loading:
             try:
                 data, address = s.recvfrom(1024)
@@ -143,6 +141,23 @@ class ServerManager:
             self.lan_listbox.set_visible(False)
             self.lan_games_label.set_visible(False)
 
+    def start_lan_thread(self):
+        # Minecraft sends multicasts, when hosting LAN world.
+        # Address:224.0.2.60 Port:4445
+        self.lan_games_loading = True
+        s = socket.socket(type=socket.SOCK_DGRAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind(('', 4445))
+        mreq = struct.pack("4si", socket.inet_aton("224.0.2.60"),
+                           socket.INADDR_ANY)
+        try:
+            s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+            s.settimeout(5)
+            lan_thread = threading.Thread(target=self.load_lan_games, args=[s])
+            lan_thread.start()
+        except OSError:
+            self.lan_games_loading = False
+
     def load_servers(self):
         saved = Settings().get_servers()
         for s in saved:
@@ -154,8 +169,7 @@ class ServerManager:
             self.servers_list.append(row)
             self.servers_listbox.append(row)
         self.load_localhost_servers()
-        lan_thread = threading.Thread(target=self.load_lan_games)
-        lan_thread.start()
+        self.start_lan_thread()
         self.add_autorefresh_timeout()
         return len(saved)
 
