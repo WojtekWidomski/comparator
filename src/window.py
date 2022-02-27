@@ -98,6 +98,15 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
 
+        network_monitor = Gio.NetworkMonitor.get_default()
+        network_monitor.connect("network-changed", self.network_changed)
+
+    def network_changed(self, monitor, available):
+        if available:
+            self.servers_stack.set_visible_child_name("servers")
+            self.servers_manager.refresh_all()
+        else:
+            self.servers_stack.set_visible_child_name("no_network")
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
