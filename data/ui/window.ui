@@ -232,8 +232,8 @@
                                     <property name="name">empty</property>
                                     <property name="child">
                                       <object class="AdwStatusPage" id="servers_empty">
-                                        <property name="title">No servers</property>
-                                        <property name="description">No servers added and no LAN games found</property>
+                                        <property name="title" translatable="yes">No servers</property>
+                                        <property name="description" translatable="yes">No servers added and no LAN games found</property>
                                         <property name="icon-name">network-server-symbolic</property>
                                       </object>
                                     </property>

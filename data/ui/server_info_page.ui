@@ -241,8 +241,8 @@
         <property name="name">error</property>
         <property name="child">
           <object class="AdwStatusPage" id="error_status_page">
-            <property name="title">Can not connect to server</property>
-            <property name="description">Make sure address is correct</property>
+            <property name="title" translatable="yes">Can not connect to server</property>
+            <property name="description" translatable="yes">Make sure address is correct</property>
             <property name="icon-name">network-error-symbolic</property>
           </object>
         </property>
