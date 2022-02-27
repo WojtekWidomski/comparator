@@ -83,7 +83,7 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton">
+                              <object class="GtkButton" id="add_server_button">
                                 <property name="focusable">1</property>
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Add server</property>
