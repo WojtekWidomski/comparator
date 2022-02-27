@@ -107,7 +107,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.servers_manager.refresh_all()
         else:
             self.servers_stack.set_visible_child_name("no_network")
-            self.back_clicked(None)
+            if self.servers_leaflet.get_visible_child_name() == "server_info":
+                self.back_clicked(None)
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
