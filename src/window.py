@@ -61,6 +61,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
     removing = False
 
+    last_network_state = True
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.settings = Settings()
@@ -103,21 +105,23 @@ class ComparatorWindow(Adw.ApplicationWindow):
         network_monitor.connect("network-changed", self.network_changed)
 
     def network_changed(self, monitor, available):
-        if available:
-            self.servers_stack.set_visible_child_name("servers")
-            self.add_server_button.set_visible(True)
-            self.refresh_button.set_visible(True)
-            self.lookup_action("edit_list").set_enabled(True)
-            self.servers_manager.refresh_all()
-        else:
-            self.servers_stack.set_visible_child_name("no_network")
-            self.add_server_button.set_visible(False)
-            self.refresh_button.set_visible(False)
-            self.lookup_action("edit_list").set_enabled(False)
-            if self.servers_leaflet.get_visible_child_name() == "server_info":
-                self.back_clicked(None)
-            if self.edit_mode:
-                self.exit_edit_mode(None)
+        if available != self.last_network_state:
+            if available:
+                self.servers_stack.set_visible_child_name("servers")
+                self.add_server_button.set_visible(True)
+                self.refresh_button.set_visible(True)
+                self.lookup_action("edit_list").set_enabled(True)
+                self.servers_manager.refresh_all()
+            else:
+                self.servers_stack.set_visible_child_name("no_network")
+                self.add_server_button.set_visible(False)
+                self.refresh_button.set_visible(False)
+                self.lookup_action("edit_list").set_enabled(False)
+                if self.servers_leaflet.get_visible_child_name() == "server_info":
+                    self.back_clicked(None)
+                if self.edit_mode:
+                    self.exit_edit_mode(None)
+            self.last_network_state = available
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
