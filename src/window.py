@@ -333,6 +333,17 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_listbox.remove_controller(self.droptarget)
         self.servers_manager.set_edit_mode(False)
 
+    def list_changed(self):
+        if (len(self.servers_list) == 0 or (self.removing and len(self.servers_list) == 1)) and len(self.servers_localhost_list) == 0:
+            self.servers_list_set_visible(False)
+            if len(self.servers_manager.lan_games) == 0:
+                self.servers_stack.set_visible_child_name("empty")
+            else:
+                self.servers_stack.set_visible_child_name("servers")
+        else:
+            self.servers_list_set_visible(True)
+            self.servers_stack.set_visible_child_name("servers")
+
     def servers_list_set_visible(self, visible):
         self.servers_list_label.set_visible(visible)
         if len(self.servers_list) != 0 and visible and not (self.removing and len(self.servers_list) == 1):
