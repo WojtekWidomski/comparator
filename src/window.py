@@ -333,6 +333,16 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_listbox.remove_controller(self.droptarget)
         self.servers_manager.set_edit_mode(False)
 
+    def servers_list_set_visible(self, visible):
+        self.servers_list_label.set_visible(visible)
+        if len(self.servers_list) != 0 and visible and not (self.removing and len(self.servers_list) == 1):
+            self.servers_listbox.set_visible(True)
+        else:
+            self.servers_listbox.set_visible(False)
+        if visible:
+            self.lan_games_label.set_margin_top(18)
+        else:
+            self.lan_games_label.set_margin_top(0)
 
     def drag_drop(self, target, data, x, y):
         moved = self.servers_listbox.get_row_at_index(int(data))
