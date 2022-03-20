@@ -317,7 +317,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
         list_elements = self.servers_localhost_list
         self.list_changed()
         if len(list_elements) == 1:
-            self.servers_localhost_listbox.get_row_at_index(0).name.set_label(_("This computer"))
+            self.servers_localhost_listbox.get_row_at_index(0).name_label.set_label(_("This computer"))
         elif len(list_elements) == 0:
             self.servers_localhost_listbox.set_visible(False)
             self.servers_localhost_listbox.set_margin_bottom(0)
