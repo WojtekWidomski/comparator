@@ -51,6 +51,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
     infopage_menubutton = Gtk.Template.Child()
 
     lan_games_label = Gtk.Template.Child()
+    servers_list_label = Gtk.Template.Child()
 
     servers_list = []
     servers_localhost_list = []
@@ -84,10 +85,12 @@ class ComparatorWindow(Adw.ApplicationWindow):
                                             self.localhost_server_removed,
                                             self.servers_list,
                                             self.servers_localhost_list,
-                                            self.lan_games_label)
+                                            self.lan_games_label,
+                                            self.list_changed)
         loaded_servers_count = self.servers_manager.load_servers()
         if loaded_servers_count == 0:
             self.servers_stack.set_visible_child_name("empty")
+            self.servers_list_set_visible(False)
 
         style_manager = Adw.StyleManager.get_default()
         dark_mode = self.settings.load("dark-mode")
@@ -201,6 +204,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
             address = address_entry.get_text()
             self.servers_manager.add(name, address)
             dialog.destroy()
+            self.servers_list_set_visible(True)
             self.servers_stack.set_visible_child_name("servers")
 
     def save_edit(self, button, dialog, name_entry, address_entry):
@@ -250,7 +254,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_leaflet.set_visible_child_name("servers_list")
 
         if len(self.servers_list) == 1:
-            self.servers_stack.set_visible_child_name("empty")
+            self.servers_list_set_visible(False)
+            self.list_changed()
 
     def show_notification(self, text, clicked_function, button_text="",
                             time=5, timeout_function=None):
@@ -290,6 +295,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.removed_server.set_visible(True)
         self.notification_revealer.set_reveal_child(False)
         self.removing = False
+        self.servers_list_set_visible(True)
         self.servers_stack.set_visible_child_name("servers")
 
     def close_notification(self, button, function):
@@ -309,8 +315,9 @@ class ComparatorWindow(Adw.ApplicationWindow):
     def localhost_server_removed(self, row):
         self.servers_localhost_list.remove(row)
         list_elements = self.servers_localhost_list
+        self.list_changed()
         if len(list_elements) == 1:
-            self.servers_localhost_listbox.get_row_at_index(0).name.set_label(_("This computer"))
+            self.servers_localhost_listbox.get_row_at_index(0).name_label.set_label(_("This computer"))
         elif len(list_elements) == 0:
             self.servers_localhost_listbox.set_visible(False)
             self.servers_localhost_listbox.set_margin_bottom(0)
@@ -333,6 +340,29 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_listbox.remove_controller(self.droptarget)
         self.servers_manager.set_edit_mode(False)
 
+    def list_changed(self):
+        if (len(self.servers_list) == 0 or (self.removing and len(self.servers_list) == 1)) and len(self.servers_localhost_list) == 0:
+            self.servers_list_set_visible(False)
+            if len(self.servers_manager.lan_games) == 0:
+                self.servers_stack.set_visible_child_name("empty")
+            else:
+                self.servers_stack.set_visible_child_name("servers")
+        else:
+            self.servers_list_set_visible(True)
+            self.servers_stack.set_visible_child_name("servers")
+
+    def servers_list_set_visible(self, visible):
+        self.servers_list_label.set_visible(visible)
+        if len(self.servers_list) != 0 and visible and not (self.removing and len(self.servers_list) == 1):
+            self.servers_listbox.set_visible(True)
+            self.servers_localhost_listbox.set_margin_bottom(12)
+        else:
+            self.servers_listbox.set_visible(False)
+            self.servers_localhost_listbox.set_margin_bottom(0)
+        if visible:
+            self.lan_games_label.set_margin_top(18)
+        else:
+            self.lan_games_label.set_margin_top(0)
 
     def drag_drop(self, target, data, x, y):
         moved = self.servers_listbox.get_row_at_index(int(data))

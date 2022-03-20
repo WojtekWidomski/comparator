@@ -30,7 +30,7 @@ class ServerManager:
     def __init__(self, servers_listbox, servers_localhost_listbox, lan_listbox,
                  servers_leaflet, infopage, refresh_button,
                  removed_localhost_server_function, servers_list,
-                 servers_localhost_list, lan_games_label):
+                 servers_localhost_list, lan_games_label, list_changed_function):
         self.servers_listbox = servers_listbox
         self.servers_localhost_listbox = servers_localhost_listbox
         self.lan_listbox = lan_listbox
@@ -41,6 +41,7 @@ class ServerManager:
         self.servers_list = servers_list
         self.servers_localhost_list = servers_localhost_list
         self.lan_games_label = lan_games_label
+        self.list_changed_function = list_changed_function
 
         self.lan_games = set()
         self.lan_games_timeouts = dict()
@@ -97,8 +98,7 @@ class ServerManager:
                                     removed_function=self.removed_localhost_server_function)
             self.servers_localhost_list.append(row)
             self.servers_localhost_listbox.insert(row, -1)
-            # After removing servers, bottom margin is removed in ComparatorWindow
-            self.servers_localhost_listbox.set_margin_bottom(12)
+            self.list_changed_function()
             self.servers_localhost_listbox.set_visible(True)
 
     def load_lan_games(self, s):
@@ -129,6 +129,7 @@ class ServerManager:
                 self.lan_games_timeouts[(data, address)] = GLib.timeout_add(
                     5000, self.remove_lan_world, row, (data, address), port)
                 self.lan_games.add((address[0], port))
+                GLib.idle_add(self.list_changed_function)
             except (socket.timeout, ValueError):
                 pass
 
@@ -137,6 +138,7 @@ class ServerManager:
         self.lan_listbox.remove(row)
         self.lan_games.remove((world_data[1][0], port))
         self.lan_games_timeouts.pop(world_data)
+        self.list_changed_function()
         if len(self.lan_games) == 0:
             self.lan_listbox.set_visible(False)
             self.lan_games_label.set_visible(False)

@@ -167,7 +167,7 @@
                                                   <object class="GtkBox">
                                                     <property name="orientation">vertical</property>
                                                     <child>
-                                                      <object class="GtkLabel">
+                                                      <object class="GtkLabel" id="servers_list_label">
                                                         <property name="halign">start</property>
                                                         <property name="margin-bottom">12</property>
                                                         <property name="label" translatable="yes">Servers</property>
