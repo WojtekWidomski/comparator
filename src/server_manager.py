@@ -99,8 +99,6 @@ class ServerManager:
             self.servers_localhost_list.append(row)
             self.servers_localhost_listbox.insert(row, -1)
             self.list_changed_function()
-            # After removing servers, bottom margin is removed in ComparatorWindow
-            self.servers_localhost_listbox.set_margin_bottom(12)
             self.servers_localhost_listbox.set_visible(True)
 
     def load_lan_games(self, s):

@@ -355,8 +355,10 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_list_label.set_visible(visible)
         if len(self.servers_list) != 0 and visible and not (self.removing and len(self.servers_list) == 1):
             self.servers_listbox.set_visible(True)
+            self.servers_localhost_listbox.set_margin_bottom(12)
         else:
             self.servers_listbox.set_visible(False)
+            self.servers_localhost_listbox.set_margin_bottom(0)
         if visible:
             self.lan_games_label.set_margin_top(18)
         else:
