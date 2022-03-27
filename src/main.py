@@ -48,6 +48,8 @@ class Application(Adw.Application):
         self.set_accels_for_action("win.add_server", ["<Ctrl>n"])
         self.set_accels_for_action("win.remove_server", ["Delete"])
         self.set_accels_for_action("win.undo_remove", ["<Ctrl>z"])
+        self.set_accels_for_action("win.move_server_up", ["<Alt>Up"])
+        self.set_accels_for_action("win.move_server_down", ["<Alt>Down"])
         self.set_accels_for_action("app.quit", ["<Ctrl>q"])
 
     def create_action(self, name, function):

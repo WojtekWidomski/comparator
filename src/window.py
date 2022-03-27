@@ -107,6 +107,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.create_action("activate_menu", self.activate_menu)
         self.create_action("refresh", self.refresh)
         self.create_action("undo_remove", self.undo_remove_action)
+        self.create_action("move_server_up", self.edit_move_up)
+        self.create_action("move_server_down", self.edit_move_down)
 
         network_monitor = Gio.NetworkMonitor.get_default()
         network_monitor.connect("network-changed", self.network_changed)
@@ -356,6 +358,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.droptarget.connect("drop", self.drag_drop)
         self.droptarget.connect("motion", self.drag_motion)
         self.droptarget.connect("leave", self.drag_leave)
+        self.servers_listbox.set_focus_child(self.servers_listbox.get_row_at_index(0))
+        self.servers_listbox.get_row_at_index(0).grab_focus()
 
     @Gtk.Template.Callback()
     def exit_edit_mode(self, button):
@@ -387,6 +391,23 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.lan_games_label.set_margin_top(18)
         else:
             self.lan_games_label.set_margin_top(0)
+
+    def edit_move_up(self, action, parameter):
+        self.edit_move_focus_row(-1)
+
+    def edit_move_down(self, action, parameter):
+        self.edit_move_focus_row(1)
+
+    def edit_move_focus_row(self, move_number):
+        row = self.servers_listbox.get_focus_child()
+        if self.edit_mode and row:
+            index = row.get_index()
+            if index + move_number >= 0 and index + move_number < len(self.servers_list):
+                self.servers_listbox.remove(row)
+                self.servers_listbox.insert(row, index+move_number)
+                self.servers_manager.move(index, index+move_number)
+                self.servers_listbox.set_focus_child(row)
+                row.grab_focus()
 
     def drag_drop(self, target, data, x, y):
         moved = self.servers_listbox.get_row_at_index(int(data))
