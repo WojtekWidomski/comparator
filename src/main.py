@@ -41,6 +41,14 @@ class Application(Adw.Application):
         Adw.Application.do_startup(self)
         self.create_action("about", self.show_about_dialog)
         self.create_action("quit", self.quit_application)
+        self.set_accels_for_action("win.settings", ["<Ctrl>comma"])
+        self.set_accels_for_action("win.activate_menu", ["F10"])
+        self.set_accels_for_action("win.edit", ["<Ctrl>e"])
+        self.set_accels_for_action("win.refresh", ["<Ctrl>r", "F5"])
+        self.set_accels_for_action("win.add_server", ["<Ctrl>n"])
+        self.set_accels_for_action("win.remove_server", ["Delete"])
+        self.set_accels_for_action("win.undo_remove", ["<Ctrl>z"])
+        self.set_accels_for_action("app.quit", ["<Ctrl>q"])
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
