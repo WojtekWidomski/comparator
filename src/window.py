@@ -47,6 +47,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
     add_server_button = Gtk.Template.Child()
     refresh_button = Gtk.Template.Child()
+    app_menu_button = Gtk.Template.Child()
     infopage_refresh_button = Gtk.Template.Child()
     infopage_menubutton = Gtk.Template.Child()
 
@@ -105,7 +106,9 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.create_action("add_server", self.add_clicked)
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
+        self.create_action("activate_menu", self.activate_menu)
         self.create_action("refresh", self.refresh)
+        self.create_action("undo_remove", self.undo_remove_action)
 
         network_monitor = Gio.NetworkMonitor.get_default()
         network_monitor.connect("network-changed", self.network_changed)
@@ -301,6 +304,10 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_manager.remove_server(self.removed_server.get_index())
         self.removing = False
 
+    def undo_remove_action(self, action, paraneter):
+        if self.removing:
+            self.undo_remove(None)
+
     def undo_remove(self, button):
         GLib.source_remove(self.notification_timeout)
         self.removed_server.set_visible(True)
@@ -454,6 +461,12 @@ class ComparatorWindow(Adw.ApplicationWindow):
         preferences_window = PreferencesWindow(self.settings, self.servers_manager)
         preferences_window.present()
         preferences_window.set_transient_for(self)
+
+    def activate_menu(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.infopage_menubutton.activate()
+        else:
+            self.app_menu_button.activate()
 
     @Gtk.Template.Callback()
     def width_changed(self, widget, param):
