@@ -35,13 +35,30 @@ class Application(Adw.Application):
         win = self.props.active_window
         if not win:
             win = ComparatorWindow(application=self)
-        self.create_action("about", self.show_about_dialog)
         win.present()
+
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+        self.create_action("about", self.show_about_dialog)
+        self.create_action("quit", self.quit_application)
+        self.set_accels_for_action("win.settings", ["<Ctrl>comma"])
+        self.set_accels_for_action("win.activate_menu", ["F10"])
+        self.set_accels_for_action("win.edit", ["<Ctrl>e"])
+        self.set_accels_for_action("win.refresh", ["<Ctrl>r", "F5"])
+        self.set_accels_for_action("win.add_server", ["<Ctrl>n"])
+        self.set_accels_for_action("win.remove_server", ["Delete"])
+        self.set_accels_for_action("win.undo_remove", ["<Ctrl>z"])
+        self.set_accels_for_action("win.move_server_up", ["<Alt>Up"])
+        self.set_accels_for_action("win.move_server_down", ["<Alt>Down"])
+        self.set_accels_for_action("app.quit", ["<Ctrl>q"])
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", function)
         self.add_action(action)
+
+    def quit_application(self, widget, param):
+        self.props.active_window.close()
 
     def show_about_dialog(self, widget, param):
         dialog_builder = Gtk.Builder.new_from_resource('/io/github/WojtekWidomski/comparator/ui/about_dialog.ui')

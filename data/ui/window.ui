@@ -7,7 +7,7 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">Edit</attribute>
-        <attribute name="action">win.edit_server</attribute>
+        <attribute name="action">win.edit</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Remove server</attribute>
@@ -20,13 +20,17 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">Edit</attribute>
-        <attribute name="action">win.edit_list</attribute>
+        <attribute name="action">win.edit</attribute>
       </item>
     </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">Settings</attribute>
         <attribute name="action">win.settings</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Keyboard shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">About</attribute>
@@ -74,7 +78,7 @@
                               </object>
                             </child>
                             <child type="end">
-                              <object class="GtkMenuButton">
+                              <object class="GtkMenuButton" id="app_menu_button">
                                 <property name="focusable">1</property>
                                 <property name="focus-on-click">0</property>
                                 <property name="receives-default">1</property>
@@ -88,7 +92,7 @@
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Add server</property>
                                 <property name="icon-name">list-add-symbolic</property>
-                                <signal name="clicked" handler="add_clicked" swapped="no"/>
+                                <property name="action-name">win.add_server</property>
                               </object>
                             </child>
                             <child type="end">
@@ -97,7 +101,7 @@
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Refresh</property>
                                 <property name="icon-name">view-refresh-symbolic</property>
-                                <signal name="clicked" handler="refresh_all" swapped="no"/>
+                                <property name="action-name">win.refresh</property>
                               </object>
                             </child>
                           </object>
@@ -355,7 +359,7 @@
                         <property name="receives-default">1</property>
                         <property name="tooltip-text" translatable="yes">Refresh</property>
                         <property name="icon-name">view-refresh-symbolic</property>
-                        <signal name="clicked" handler="refresh_server" swapped="no"/>
+                        <property name="action-name">win.refresh</property>
                       </object>
                     </child>
                   </object>

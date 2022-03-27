@@ -47,6 +47,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
     add_server_button = Gtk.Template.Child()
     refresh_button = Gtk.Template.Child()
+    app_menu_button = Gtk.Template.Child()
     infopage_refresh_button = Gtk.Template.Child()
     infopage_menubutton = Gtk.Template.Child()
 
@@ -99,10 +100,15 @@ class ComparatorWindow(Adw.ApplicationWindow):
         else:
             style_manager.set_color_scheme(Adw.ColorScheme.PREFER_LIGHT)
 
-        self.create_action("edit_list", self.edit_list)
-        self.create_action("edit_server", self.edit_clicked)
+        self.create_action("edit", self.edit)
+        self.create_action("add_server", self.add_clicked)
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
+        self.create_action("activate_menu", self.activate_menu)
+        self.create_action("refresh", self.refresh)
+        self.create_action("undo_remove", self.undo_remove_action)
+        self.create_action("move_server_up", self.edit_move_up)
+        self.create_action("move_server_down", self.edit_move_down)
 
         network_monitor = Gio.NetworkMonitor.get_default()
         network_monitor.connect("network-changed", self.network_changed)
@@ -113,13 +119,15 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.servers_stack.set_visible_child_name("servers")
                 self.add_server_button.set_visible(True)
                 self.refresh_button.set_visible(True)
-                self.lookup_action("edit_list").set_enabled(True)
+                self.lookup_action("edit").set_enabled(True)
+                self.lookup_action("add_server").set_enabled(True)
                 self.servers_manager.refresh_all()
             else:
                 self.servers_stack.set_visible_child_name("no_network")
                 self.add_server_button.set_visible(False)
                 self.refresh_button.set_visible(False)
-                self.lookup_action("edit_list").set_enabled(False)
+                self.lookup_action("edit").set_enabled(False)
+                self.lookup_action("add_server").set_enabled(False)
                 if self.servers_leaflet.get_visible_child_name() == "server_info":
                     self.back_clicked(None)
                 if self.edit_mode:
@@ -131,11 +139,20 @@ class ComparatorWindow(Adw.ApplicationWindow):
         action.connect("activate", function)
         self.add_action(action)
 
-    @Gtk.Template.Callback()
-    def add_clicked(self, button):
+    def edit(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.edit_clicked()
+        else:
+            if self.edit_mode:
+                self.exit_edit_mode(None)
+            else:
+                self.edit_list()
+
+    def add_clicked(self, action, parameter):
+        self.servers_leaflet.set_visible_child_name("servers_list")
         self.show_dialog(self.add_server)
 
-    def edit_clicked(self, action, parameter):
+    def edit_clicked(self):
         self.show_dialog(self.save_edit, _("Save"), _("Edit server"),
                           self.clicked_server.name_label.get_label(),
                           self.clicked_server.address)
@@ -238,24 +255,25 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.infopage_menubutton.set_visible(False)
 
     def remove_clicked(self, action, parameter):
-        if self.removing:
-            self.close_notification(None, self.remove_server)
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            if self.removing:
+                self.close_notification(None, self.remove_server)
 
-        self.removed_server = self.clicked_server
+            self.removed_server = self.clicked_server
 
-        name = self.removed_server.name_label.get_label()
-        self.show_notification(_("{} removed").format(name), self.undo_remove,
-                                 button_text=_("Undo"),
-                                 timeout_function=self.remove_server)
+            name = self.removed_server.name_label.get_label()
+            self.show_notification(_("{} removed").format(name), self.undo_remove,
+                                     button_text=_("Undo"),
+                                     timeout_function=self.remove_server)
 
-        self.removing = True
-        self.removed_server.set_visible(False)
+            self.removing = True
+            self.removed_server.set_visible(False)
 
-        self.servers_leaflet.set_visible_child_name("servers_list")
+            self.servers_leaflet.set_visible_child_name("servers_list")
 
-        if len(self.servers_list) == 1:
-            self.servers_list_set_visible(False)
-            self.list_changed()
+            if len(self.servers_list) == 1:
+                self.servers_list_set_visible(False)
+                self.list_changed()
 
     def show_notification(self, text, clicked_function, button_text="",
                             time=5, timeout_function=None):
@@ -290,6 +308,10 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.servers_manager.remove_server(self.removed_server.get_index())
         self.removing = False
 
+    def undo_remove_action(self, action, paraneter):
+        if self.removing:
+            self.undo_remove(None)
+
     def undo_remove(self, button):
         GLib.source_remove(self.notification_timeout)
         self.removed_server.set_visible(True)
@@ -304,12 +326,16 @@ class ComparatorWindow(Adw.ApplicationWindow):
         if function != None:
             function()
 
-    @Gtk.Template.Callback()
-    def refresh_all(self, button):
+    def refresh(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.refresh_server()
+        else:
+            self.refresh_all()
+
+    def refresh_all(self):
         self.servers_manager.refresh_all()
 
-    @Gtk.Template.Callback()
-    def refresh_server(self, button):
+    def refresh_server(self):
         self.clicked_server.refresh()
 
     def localhost_server_removed(self, row):
@@ -322,7 +348,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.servers_localhost_listbox.set_visible(False)
             self.servers_localhost_listbox.set_margin_bottom(0)
 
-    def edit_list(self, action, parameter):
+    def edit_list(self):
         self.edit_mode = True
         self.header_bar_stack.set_visible_child_name("edit_headerbar")
         self.droptarget = Gtk.DropTarget.new(GObject.TYPE_STRING,
@@ -332,6 +358,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.droptarget.connect("drop", self.drag_drop)
         self.droptarget.connect("motion", self.drag_motion)
         self.droptarget.connect("leave", self.drag_leave)
+        self.servers_listbox.set_focus_child(self.servers_listbox.get_row_at_index(0))
+        self.servers_listbox.get_row_at_index(0).grab_focus()
 
     @Gtk.Template.Callback()
     def exit_edit_mode(self, button):
@@ -363,6 +391,23 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.lan_games_label.set_margin_top(18)
         else:
             self.lan_games_label.set_margin_top(0)
+
+    def edit_move_up(self, action, parameter):
+        self.edit_move_focus_row(-1)
+
+    def edit_move_down(self, action, parameter):
+        self.edit_move_focus_row(1)
+
+    def edit_move_focus_row(self, move_number):
+        row = self.servers_listbox.get_focus_child()
+        if self.edit_mode and row:
+            index = row.get_index()
+            if index + move_number >= 0 and index + move_number < len(self.servers_list):
+                self.servers_listbox.remove(row)
+                self.servers_listbox.insert(row, index+move_number)
+                self.servers_manager.move(index, index+move_number)
+                self.servers_listbox.set_focus_child(row)
+                row.grab_focus()
 
     def drag_drop(self, target, data, x, y):
         moved = self.servers_listbox.get_row_at_index(int(data))
@@ -437,6 +482,12 @@ class ComparatorWindow(Adw.ApplicationWindow):
         preferences_window = PreferencesWindow(self.settings, self.servers_manager)
         preferences_window.present()
         preferences_window.set_transient_for(self)
+
+    def activate_menu(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.infopage_menubutton.activate()
+        else:
+            self.app_menu_button.activate()
 
     @Gtk.Template.Callback()
     def width_changed(self, widget, param):

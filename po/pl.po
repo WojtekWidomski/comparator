@@ -77,6 +77,10 @@ msgstr "Usuń serwer"
 msgid "Settings"
 msgstr "Ustawienia"
 
+#: data/ui/window.ui:32 data/ui/help-overlay.ui:19
+msgid "Keyboard shortcuts"
+msgstr "Skróty klawiszowe"
+
 #: data/ui/window.ui:32
 msgid "About"
 msgstr "O programie"
@@ -213,9 +217,49 @@ msgstr "Serwer"
 msgid "0"
 msgstr "0"
 
+#: data/ui/help-overlay.ui:10
+msgid "General"
+msgstr "Ogólne"
+
+#: data/ui/help-overlay.ui:13
+msgid "Open Menu"
+msgstr "Otwórz menu"
+
 #: src/window.py:89
 msgid "Save"
 msgstr "Zapisz"
+
+#: data/ui/help-overlay.ui:31
+msgid "Quit"
+msgstr "Wyjdź"
+
+#: data/ui/help-overlay.ui:42
+msgid "Refresh all servers"
+msgstr "Odśwież wszystkie serwery"
+
+#: data/ui/help-overlay.ui:54
+msgid "Edit list"
+msgstr "Edytuj listę"
+
+#: data/ui/help-overlay.ui:60
+msgid "Undo remove"
+msgstr "Cofnij usunięcie"
+
+#: data/ui/help-overlay.ui:71
+msgid "Move up"
+msgstr "Przesuń w górę"
+
+#: data/ui/help-overlay.ui:77
+msgid "Move down"
+msgstr "Przesuń w dół"
+
+#: data/ui/help-overlay.ui:68
+msgid "Server information"
+msgstr "Informacje o serwerze"
+
+#: data/ui/help-overlay.ui:71
+msgid "Refresh server"
+msgstr "Odśwież serwer"
 
 #: src/window.py:89
 msgid "Edit server"
