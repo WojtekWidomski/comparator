@@ -151,6 +151,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.edit_list(None, None)
 
     def add_clicked(self, action, parameter):
+        self.servers_leaflet.set_visible_child_name("servers_list")
         self.show_dialog(self.add_server)
 
     def edit_clicked(self, action, parameter):
