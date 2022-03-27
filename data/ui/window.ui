@@ -88,7 +88,7 @@
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Add server</property>
                                 <property name="icon-name">list-add-symbolic</property>
-                                <signal name="clicked" handler="add_clicked" swapped="no"/>
+                                <property name="action-name">win.add_server</property>
                               </object>
                             </child>
                             <child type="end">

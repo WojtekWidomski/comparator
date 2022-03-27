@@ -101,6 +101,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
         self.create_action("edit_list", self.edit_list)
         self.create_action("edit_server", self.edit_clicked)
+        self.create_action("add_server", self.add_clicked)
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
 
@@ -131,8 +132,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
         action.connect("activate", function)
         self.add_action(action)
 
-    @Gtk.Template.Callback()
-    def add_clicked(self, button):
+    def add_clicked(self, action, parameter):
         self.show_dialog(self.add_server)
 
     def edit_clicked(self, action, parameter):
