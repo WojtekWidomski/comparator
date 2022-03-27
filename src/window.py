@@ -256,24 +256,25 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.infopage_menubutton.set_visible(False)
 
     def remove_clicked(self, action, parameter):
-        if self.removing:
-            self.close_notification(None, self.remove_server)
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            if self.removing:
+                self.close_notification(None, self.remove_server)
 
-        self.removed_server = self.clicked_server
+            self.removed_server = self.clicked_server
 
-        name = self.removed_server.name_label.get_label()
-        self.show_notification(_("{} removed").format(name), self.undo_remove,
-                                 button_text=_("Undo"),
-                                 timeout_function=self.remove_server)
+            name = self.removed_server.name_label.get_label()
+            self.show_notification(_("{} removed").format(name), self.undo_remove,
+                                     button_text=_("Undo"),
+                                     timeout_function=self.remove_server)
 
-        self.removing = True
-        self.removed_server.set_visible(False)
+            self.removing = True
+            self.removed_server.set_visible(False)
 
-        self.servers_leaflet.set_visible_child_name("servers_list")
+            self.servers_leaflet.set_visible_child_name("servers_list")
 
-        if len(self.servers_list) == 1:
-            self.servers_list_set_visible(False)
-            self.list_changed()
+            if len(self.servers_list) == 1:
+                self.servers_list_set_visible(False)
+                self.list_changed()
 
     def show_notification(self, text, clicked_function, button_text="",
                             time=5, timeout_function=None):
