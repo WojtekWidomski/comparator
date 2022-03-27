@@ -120,12 +120,16 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.add_server_button.set_visible(True)
                 self.refresh_button.set_visible(True)
                 self.lookup_action("edit_list").set_enabled(True)
+                self.lookup_action("edit").set_enabled(True)
+                self.lookup_action("add_server").set_enabled(True)
                 self.servers_manager.refresh_all()
             else:
                 self.servers_stack.set_visible_child_name("no_network")
                 self.add_server_button.set_visible(False)
                 self.refresh_button.set_visible(False)
                 self.lookup_action("edit_list").set_enabled(False)
+                self.lookup_action("edit").set_enabled(False)
+                self.lookup_action("add_server").set_enabled(False)
                 if self.servers_leaflet.get_visible_child_name() == "server_info":
                     self.back_clicked(None)
                 if self.edit_mode:
