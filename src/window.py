@@ -101,9 +101,11 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
         self.create_action("edit_list", self.edit_list)
         self.create_action("edit_server", self.edit_clicked)
+        self.create_action("edit", self.edit)
         self.create_action("add_server", self.add_clicked)
         self.create_action("remove_server", self.remove_clicked)
         self.create_action("settings", self.settings_clicked)
+        self.create_action("refresh", self.refresh)
 
         network_monitor = Gio.NetworkMonitor.get_default()
         network_monitor.connect("network-changed", self.network_changed)
@@ -131,6 +133,15 @@ class ComparatorWindow(Adw.ApplicationWindow):
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", function)
         self.add_action(action)
+
+    def edit(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.edit_clicked(None, None)
+        else:
+            if self.edit_mode:
+                self.exit_edit_mode(None)
+            else:
+                self.edit_list(None, None)
 
     def add_clicked(self, action, parameter):
         self.show_dialog(self.add_server)
@@ -303,6 +314,12 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.notification_revealer.set_reveal_child(False)
         if function != None:
             function()
+
+    def refresh(self, action, parameter):
+        if self.servers_leaflet.get_visible_child_name() == "server_info":
+            self.refresh_server(None)
+        else:
+            self.refresh_all(None)
 
     @Gtk.Template.Callback()
     def refresh_all(self, button):
