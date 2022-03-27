@@ -245,6 +245,14 @@ msgstr "Edytuj listę"
 msgid "Undo remove"
 msgstr "Cofnij usunięcie"
 
+#: data/ui/help-overlay.ui:71
+msgid "Move up"
+msgstr "Przesuń w górę"
+
+#: data/ui/help-overlay.ui:77
+msgid "Move down"
+msgstr "Przesuń w dół"
+
 #: data/ui/help-overlay.ui:68
 msgid "Server information"
 msgstr "Informacje o serwerze"
