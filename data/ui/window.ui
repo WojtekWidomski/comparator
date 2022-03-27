@@ -7,7 +7,7 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">Edit</attribute>
-        <attribute name="action">win.edit_server</attribute>
+        <attribute name="action">win.edit</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Remove server</attribute>
@@ -20,7 +20,7 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">Edit</attribute>
-        <attribute name="action">win.edit_list</attribute>
+        <attribute name="action">win.edit</attribute>
       </item>
     </section>
     <section>
@@ -97,7 +97,7 @@
                                 <property name="receives-default">1</property>
                                 <property name="tooltip-text" translatable="yes">Refresh</property>
                                 <property name="icon-name">view-refresh-symbolic</property>
-                                <signal name="clicked" handler="refresh_all" swapped="no"/>
+                                <property name="action-name">win.refresh</property>
                               </object>
                             </child>
                           </object>
@@ -355,7 +355,7 @@
                         <property name="receives-default">1</property>
                         <property name="tooltip-text" translatable="yes">Refresh</property>
                         <property name="icon-name">view-refresh-symbolic</property>
-                        <signal name="clicked" handler="refresh_server" swapped="no"/>
+                        <property name="action-name">win.refresh</property>
                       </object>
                     </child>
                   </object>

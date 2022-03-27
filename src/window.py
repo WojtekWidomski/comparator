@@ -100,8 +100,6 @@ class ComparatorWindow(Adw.ApplicationWindow):
         else:
             style_manager.set_color_scheme(Adw.ColorScheme.PREFER_LIGHT)
 
-        self.create_action("edit_list", self.edit_list)
-        self.create_action("edit_server", self.edit_clicked)
         self.create_action("edit", self.edit)
         self.create_action("add_server", self.add_clicked)
         self.create_action("remove_server", self.remove_clicked)
@@ -119,7 +117,6 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.servers_stack.set_visible_child_name("servers")
                 self.add_server_button.set_visible(True)
                 self.refresh_button.set_visible(True)
-                self.lookup_action("edit_list").set_enabled(True)
                 self.lookup_action("edit").set_enabled(True)
                 self.lookup_action("add_server").set_enabled(True)
                 self.servers_manager.refresh_all()
@@ -127,7 +124,6 @@ class ComparatorWindow(Adw.ApplicationWindow):
                 self.servers_stack.set_visible_child_name("no_network")
                 self.add_server_button.set_visible(False)
                 self.refresh_button.set_visible(False)
-                self.lookup_action("edit_list").set_enabled(False)
                 self.lookup_action("edit").set_enabled(False)
                 self.lookup_action("add_server").set_enabled(False)
                 if self.servers_leaflet.get_visible_child_name() == "server_info":
@@ -143,18 +139,18 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
     def edit(self, action, parameter):
         if self.servers_leaflet.get_visible_child_name() == "server_info":
-            self.edit_clicked(None, None)
+            self.edit_clicked()
         else:
             if self.edit_mode:
                 self.exit_edit_mode(None)
             else:
-                self.edit_list(None, None)
+                self.edit_list()
 
     def add_clicked(self, action, parameter):
         self.servers_leaflet.set_visible_child_name("servers_list")
         self.show_dialog(self.add_server)
 
-    def edit_clicked(self, action, parameter):
+    def edit_clicked(self):
         self.show_dialog(self.save_edit, _("Save"), _("Edit server"),
                           self.clicked_server.name_label.get_label(),
                           self.clicked_server.address)
@@ -330,16 +326,14 @@ class ComparatorWindow(Adw.ApplicationWindow):
 
     def refresh(self, action, parameter):
         if self.servers_leaflet.get_visible_child_name() == "server_info":
-            self.refresh_server(None)
+            self.refresh_server()
         else:
-            self.refresh_all(None)
+            self.refresh_all()
 
-    @Gtk.Template.Callback()
-    def refresh_all(self, button):
+    def refresh_all(self):
         self.servers_manager.refresh_all()
 
-    @Gtk.Template.Callback()
-    def refresh_server(self, button):
+    def refresh_server(self):
         self.clicked_server.refresh()
 
     def localhost_server_removed(self, row):
@@ -352,7 +346,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
             self.servers_localhost_listbox.set_visible(False)
             self.servers_localhost_listbox.set_margin_bottom(0)
 
-    def edit_list(self, action, parameter):
+    def edit_list(self):
         self.edit_mode = True
         self.header_bar_stack.set_visible_child_name("edit_headerbar")
         self.droptarget = Gtk.DropTarget.new(GObject.TYPE_STRING,
