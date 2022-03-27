@@ -35,13 +35,20 @@ class Application(Adw.Application):
         win = self.props.active_window
         if not win:
             win = ComparatorWindow(application=self)
-        self.create_action("about", self.show_about_dialog)
         win.present()
+
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+        self.create_action("about", self.show_about_dialog)
+        self.create_action("quit", self.quit_application)
 
     def create_action(self, name, function):
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", function)
         self.add_action(action)
+
+    def quit_application(self, widget, param):
+        self.props.active_window.close()
 
     def show_about_dialog(self, widget, param):
         dialog_builder = Gtk.Builder.new_from_resource('/io/github/WojtekWidomski/comparator/ui/about_dialog.ui')
