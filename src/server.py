@@ -68,7 +68,7 @@ class Server:
             players_status = None
 
         if players_status != None:
-            if "§" in players_status[0]:
+            if any("§" in p for p in players_status):
                 self.information = ""
                 for player in players_status:
                     self.information += "\n" + Formatting().auto(player,
