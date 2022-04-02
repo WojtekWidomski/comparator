@@ -116,7 +116,7 @@ class ComparatorWindow(Adw.ApplicationWindow):
     def network_changed(self, monitor, available):
         if available != self.last_network_state:
             if available:
-                self.servers_stack.set_visible_child_name("servers")
+                self.list_changed()
                 self.add_server_button.set_visible(True)
                 self.refresh_button.set_visible(True)
                 self.lookup_action("edit").set_enabled(True)
@@ -318,7 +318,8 @@ class ComparatorWindow(Adw.ApplicationWindow):
         self.notification_revealer.set_reveal_child(False)
         self.removing = False
         self.servers_list_set_visible(True)
-        self.servers_stack.set_visible_child_name("servers")
+        if self.last_network_state:
+            self.servers_stack.set_visible_child_name("servers")
 
     def close_notification(self, button, function):
         GLib.source_remove(self.notification_timeout)
