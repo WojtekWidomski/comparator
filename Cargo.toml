@@ -1,0 +1,16 @@
+[package]
+name = "comparator"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+gettext-rs = { version = "0.7", features = ["gettext-system"] }
+gtk = { version = "0.4", package = "gtk4" }
+
+[dependencies.adw]
+package = "libadwaita"
+version  = "0.1.0"
+
+[dependencies.pyo3]
+version = "0.16.5"
+features = ["auto-initialize"]

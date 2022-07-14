@@ -4,6 +4,9 @@
     "runtime-version" : "42",
     "appstream-compose" : false,
     "sdk" : "org.gnome.Sdk",
+    "sdk-extensions" : [
+        "org.freedesktop.Sdk.Extension.rust-stable"
+    ],
     "command" : "comparator",
     "finish-args" : [
         "--share=network",
@@ -87,6 +90,13 @@
         }
     ],
     "build-options" : {
-        "env" : {        }
+        "append-path" : "/usr/lib/sdk/rust-stable/bin",
+        "build-args" : [
+            "--share=network"
+        ],
+        "env" : {
+            "RUST_BACKTRACE" : "1",
+            "RUST_LOG" : "gtk-rust-test=debug"
+        }
     }
 }
