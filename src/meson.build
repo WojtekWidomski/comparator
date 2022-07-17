@@ -1,11 +1,11 @@
 pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
-# moduledir = join_paths(pkgdatadir, 'comparator')
+moduledir = join_paths(pkgdatadir)
 
 
-# python = import('python')
+python = import('python')
 
 conf = configuration_data()
-# conf.set('PYTHON', python.find_installation('python3').path())
+conf.set('PYTHON', python.find_installation('python3').path())
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', 'comparator')
 conf.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
