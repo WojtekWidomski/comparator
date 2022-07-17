@@ -34,6 +34,12 @@ rust_sources = files(
 
 sources = [cargo_sources, rust_sources]
 
+python_modules = [
+  'api.py'
+]
+
+install_data(python_modules, install_dir: moduledir)
+
 cargo_script = find_program(join_paths(meson.project_source_root(), 'build-aux/cargo.sh'))
 cargo_release = custom_target(
   'cargo-build',
