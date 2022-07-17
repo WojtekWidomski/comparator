@@ -18,6 +18,7 @@
 mod application;
 mod config;
 mod window;
+mod server;
 
 use self::application::ComparatorApplication;
 use self::window::ComparatorWindow;

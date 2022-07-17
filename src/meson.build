@@ -30,6 +30,7 @@ rust_sources = files(
   'config.rs',
   'main.rs',
   'window.rs',
+  'server.rs'
 )
 
 sources = [cargo_sources, rust_sources]
@@ -72,4 +73,3 @@ cargo_release = custom_target(
 #   'preferences_window.py'
 # ]
 
-# install_data(comparator_sources, install_dir: moduledir)
